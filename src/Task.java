@@ -1,4 +1,6 @@
-public class Task {
+import java.util.Iterator;
+
+public class Task implements Comparable<Task>, Iterable<Task> {
     private String name;
     private String description;
     private int priority;
@@ -41,4 +43,19 @@ public class Task {
                 ", priority=" + priority +
                 '}';
     }
+
+    @Override
+    public int compareTo(Task other) {
+        if(this.priority == other.priority) {
+            return name.compareTo(other.name);
+        } else{
+            return String.valueOf(priority).compareTo(String.valueOf(other.priority));
+        }
+    }
+
+    @Override
+    public Iterator<Task> iterator() {
+        return null;
+    }
 }
+

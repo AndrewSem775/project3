@@ -2,6 +2,8 @@
 //Thursday, March 7
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
@@ -58,19 +60,27 @@ public class Main {
                     myTasks.add(newTask);
 
                 } else if (choice.equals("4")) {
-                    System.out.println(myTasks);
+                    Collections.sort(myTasks);
+                    for(Task a: myTasks){
+                        System.out.println(a);
+                    }
+
+
                 } else if (choice.equals("5")) {
                     System.out.println("Which priority do you want to list? (1-5)");
                     int choice3 = input.nextInt();
+                    input.nextLine();
 
                     for (int i = 0; i < myTasks.size(); i++) {
                         if (myTasks.get(i).getPriority() == choice3){
                             System.out.println(myTasks.get(i));
                         }
                     }
-                    break;
                 }
             }
+
+
+
         } catch (Exception e){
             System.out.println("something went wrong, please try again.");
         }
