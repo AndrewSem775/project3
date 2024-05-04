@@ -1,18 +1,26 @@
 //Andrew Semchishin
 //Thursday, March 7
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Scanner;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 public class Main {
     public static Scanner input = new Scanner(System.in);
+    public static ArrayList<Task> myTasks = new ArrayList<>();
 
     public static void main(String[] args) {
 
         try {
-            ArrayList<Task> myTasks = new ArrayList<>();
+            deserialize();
             String choice = "";
 
             while (!(choice.equals("0"))) {
@@ -22,6 +30,7 @@ public class Main {
                         "(3) Update a task.\n" +
                         "(4) List all tasks.\n" +
                         "(5) List all tasks by priority.\n" +
+                        "(6) Special surprise\n" +
                         "(0) Exit.");
                 choice = input.nextLine();
 
@@ -76,13 +85,37 @@ public class Main {
                             System.out.println(myTasks.get(i));
                         }
                     }
+
+
+                } else if(choice.equals("6")){
+                    System.out.println("dude killorAN");
                 }
+
+
             }
-
-
+            serialize();
 
         } catch (Exception e){
             System.out.println("something went wrong, please try again.");
+        }
+    }
+    static void serialize(){
+        Gson gson = new Gson();
+        try (FileWriter writer = new FileWriter("tasklist.json")){
+            gson.toJson(myTasks,writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    static void deserialize(){
+        try (FileReader reader = new FileReader("tasklist.json")){
+            JsonParser parser = new JsonParser();
+            JsonElement jsonElement = parser.parse(reader);
+            Gson gson = new Gson();
+            Type type = new TypeToken<ArrayList<Task>>(){}.getType();
+            myTasks = gson.fromJson(jsonElement,type);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
